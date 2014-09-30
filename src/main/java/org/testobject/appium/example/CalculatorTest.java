@@ -7,23 +7,41 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.remote.MobileCapabilityType;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
 
+@RunWith(Parallelized.class)
 public class CalculatorTest {
 
 	private static final String LOCALHOST = "http://127.0.0.1:4723/wd/hub";
+	private static final String TESTOBJECT = "https://app.testobject.com:443/api/appium/wd/hub";
+
+	@Parameters
+	public static List<String[]> data() {
+		return Arrays.asList(new String[][]{ {"Samsung_Google_Nexus_10_P8110_real"}, {"LG_Nexus_4_E960_real"}, {"Acer_Liquid_Z4_real"} });
+	}
 
 	private AppiumDriver driver;
+
+	@Parameter
+	public String device;
 
 	@Before
 	public void setup() throws MalformedURLException {
@@ -33,7 +51,12 @@ public class CalculatorTest {
 		capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, "com.android.calculator2");
 		capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, "Calculator");
 
-		driver = new AppiumDriver(new URL(LOCALHOST), capabilities);
+		capabilities.setCapability("testobject_api_key", "0D231125CDA641548DF4F6E73123EE78");
+		capabilities.setCapability("testobject_project", "calculator2");
+		capabilities.setCapability("testobject_app_id", "1");
+		capabilities.setCapability("testobject_device", device);
+
+		driver = new AppiumDriver(new URL(TESTOBJECT), capabilities);
 	}
 
 	@After
@@ -42,7 +65,7 @@ public class CalculatorTest {
 	}
 
 	@Test
-	public void testPlusOperation() {
+	public void testPlusOperation() throws IOException {
 		CalculatorActivityPageObject calculator = new CalculatorActivityPageObject(driver);
 		calculator.reset();
 
@@ -50,8 +73,11 @@ public class CalculatorTest {
 		calculator.tapPlus();
 		calculator.tap5();
 		calculator.tapEquals();
-
+		
 		Assert.assertEquals("7", calculator.getResult());
+
+        byte[] image = driver.getScreenshotAs(OutputType.BYTES);
+        Files.write(Paths.get("/home/aluedeke/Desktop/" + device + ".png"), image);
 	}
 
 	public static class CalculatorActivityPageObject {
