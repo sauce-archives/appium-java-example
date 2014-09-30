@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CalculatorTest {
 	
@@ -60,8 +62,10 @@ public class CalculatorTest {
 
 		driver.findElement(MobileBy.AccessibilityId("equals")).click();
 				
-		String result = driver.findElement(MobileBy.className("android.widget.EditText")).getText();
-		Assert.assertEquals("7", result);
+		WebElement result = driver.findElement(MobileBy.className("android.widget.EditText"));
+		
+		Boolean success = new WebDriverWait(driver, 1000).until(ExpectedConditions.textToBePresentInElement(result, "7"));
+		Assert.assertTrue(success);
 	}
 
 }
