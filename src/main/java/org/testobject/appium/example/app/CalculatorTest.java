@@ -1,4 +1,4 @@
-package org.testobject.appium.example;
+package org.testobject.appium.example.app;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
