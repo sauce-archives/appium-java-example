@@ -29,15 +29,23 @@ public class AppiumSevenval {
 	private static String IMAGE_PATH = "/Users/hlenke/Documents/sevenval/";
 	private static String DEVICE = "LG_Nexus_5_real";
 	
+	public static String TESTOBJECT_SUITE_NAME = "testobject_suite_name";
+    public static String TESTOBJECT_TEST_NAME = "testobject_test_name";
+    public static String TESTOBJECT_DEVICE = "testobject_device";
+    public static String TESTOBJECT_API_KEY = "testobject_api_key";
+    
 	private AppiumDriver driver;
 
 	@Before
 	public void setUpClass() throws MalformedURLException {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-		capabilities.setCapability("testobject_api_key",
+		capabilities.setCapability(TESTOBJECT_API_KEY,
 				"984FC9C513424B24B68CE3B3C15DB5E5");
-		capabilities.setCapability("testobject_device", DEVICE);
+		capabilities.setCapability(TESTOBJECT_DEVICE, DEVICE);
+		capabilities.setCapability(TESTOBJECT_SUITE_NAME, "SevenvalSuite");
+		capabilities.setCapability(TESTOBJECT_TEST_NAME, "ProductTest");
+		
 		driver = new AppiumDriver(new URL(
 				"https://app.testobject.com:443/api/appium/wd/hub"),
 				capabilities);

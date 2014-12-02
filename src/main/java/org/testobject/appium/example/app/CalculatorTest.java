@@ -77,7 +77,7 @@ public class CalculatorTest {
 		Assert.assertEquals("7", calculator.getResult());
 
         byte[] image = driver.getScreenshotAs(OutputType.BYTES);
-        Files.write(Paths.get("/home/aluedeke/Desktop/" + device + ".png"), image);
+        //Files.write(Paths.get("/home/aluedeke/Desktop/" + device + ".png"), image);
 	}
 
 	public static class CalculatorActivityPageObject {
