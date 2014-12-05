@@ -33,7 +33,7 @@ public class AppiumSevenval {
     public static String TESTOBJECT_TEST_NAME = "testobject_test_name";
     public static String TESTOBJECT_DEVICE = "testobject_device";
     public static String TESTOBJECT_API_KEY = "testobject_api_key";
-    public static String TESTOBJECT_PROJECT = "sevenval";
+    public static String TESTOBJECT_PROJECT = "testobject_project";
     
 	private AppiumDriver driver;
 
@@ -84,6 +84,7 @@ public class AppiumSevenval {
 						.equals("Sevenval » Technologie zur Optimierung Ihrer Web Performance."));
 
 	}
+	
 
 	public static class HomePageObject {
 		private final AppiumDriver driver;
