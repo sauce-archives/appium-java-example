@@ -33,6 +33,7 @@ public class AppiumSevenval {
     public static String TESTOBJECT_TEST_NAME = "testobject_test_name";
     public static String TESTOBJECT_DEVICE = "testobject_device";
     public static String TESTOBJECT_API_KEY = "testobject_api_key";
+    public static String TESTOBJECT_PROJECT = "sevenval";
     
 	private AppiumDriver driver;
 
@@ -43,6 +44,7 @@ public class AppiumSevenval {
 		capabilities.setCapability(TESTOBJECT_API_KEY,
 				"984FC9C513424B24B68CE3B3C15DB5E5");
 		capabilities.setCapability(TESTOBJECT_DEVICE, DEVICE);
+		capabilities.setCapability(TESTOBJECT_PROJECT, "sevenval");
 		capabilities.setCapability(TESTOBJECT_SUITE_NAME, "SevenvalSuite");
 		capabilities.setCapability(TESTOBJECT_TEST_NAME, "ProductTest");
 		
