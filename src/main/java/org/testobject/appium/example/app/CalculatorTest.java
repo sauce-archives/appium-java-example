@@ -52,7 +52,6 @@ public class CalculatorTest {
 		capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, "Calculator");
 
 		capabilities.setCapability("testobject_api_key", "0D231125CDA641548DF4F6E73123EE78");
-		capabilities.setCapability("testobject_project", "calculator2");
 		capabilities.setCapability("testobject_app_id", "1");
 		capabilities.setCapability("testobject_device", device);
 
