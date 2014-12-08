@@ -41,8 +41,7 @@ public class AppiumSevenval {
 	public void setUpClass() throws MalformedURLException {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-		capabilities.setCapability(TESTOBJECT_API_KEY,
-				"984FC9C513424B24B68CE3B3C15DB5E5");
+		capabilities.setCapability(TESTOBJECT_API_KEY, "your_api_key_here");
 		capabilities.setCapability(TESTOBJECT_DEVICE, DEVICE);
 		capabilities.setCapability(TESTOBJECT_PROJECT, "sevenval");
 		capabilities.setCapability(TESTOBJECT_SUITE_NAME, "SevenvalSuite");
