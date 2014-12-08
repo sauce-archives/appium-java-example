@@ -51,8 +51,8 @@ public class CalculatorTest {
 		capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, "com.android.calculator2");
 		capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, "Calculator");
 
-		capabilities.setCapability("testobject_api_key", "0D231125CDA641548DF4F6E73123EE78");
-		capabilities.setCapability("testobject_app_id", "1");
+		capabilities.setCapability("testobject_api_key", "your_api_key_here");
+		capabilities.setCapability("testobject_app_id", "your_app_id_here");
 		capabilities.setCapability("testobject_device", device);
 
 		driver = new AppiumDriver(new URL(TESTOBJECT), capabilities);
