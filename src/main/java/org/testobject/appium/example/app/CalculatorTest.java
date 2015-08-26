@@ -6,61 +6,57 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.remote.MobileCapabilityType;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
+import org.testobject.appium.common.TestObject;
+import org.testobject.appium.common.TestObjectCapabilities;
+import org.testobject.appium.junit.TestObjectAppiumSuite;
+import org.testobject.appium.junit.TestObjectTestResultWatcher;
 
-@RunWith(Parallelized.class)
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.List;
+
+@TestObject(testObjectApiKey = "YOUR_API_KEY_HERE", testObjectSuiteId = 1)
+@RunWith(TestObjectAppiumSuite.class)
 public class CalculatorTest {
 
-	private static final String LOCALHOST = "http://127.0.0.1:4723/wd/hub";
-	private static final String TESTOBJECT = "https://app.testobject.com:443/api/appium/wd/hub";
-
-	@Parameters
-	public static List<String[]> data() {
-		return Arrays.asList(new String[][]{ {"Samsung_Google_Nexus_10_P8110_real"}, {"LG_Nexus_4_E960_real"}, {"Acer_Liquid_Z4_real"} });
-	}
+	@Rule
+	public TestObjectTestResultWatcher watcher = new TestObjectTestResultWatcher();
 
 	private AppiumDriver driver;
 
-	@Parameter
-	public String device;
-
 	@Before
-	public void setup() throws MalformedURLException {
+	public void setUp() throws MalformedURLException {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "android");
-		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "android");
+
 		capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, "com.android.calculator2");
 		capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, "Calculator");
 
-		capabilities.setCapability("testobject_api_key", "your_api_key_here");
-		capabilities.setCapability("testobject_app_id", "your_app_id_here");
-		capabilities.setCapability("testobject_device", device);
+		capabilities.setCapability(TestObjectCapabilities.TESTOBJECT_API_KEY, watcher.getApiKey());
+		capabilities.setCapability(TestObjectCapabilities.TESTOBJECT_TEST_REPORT_ID, watcher.getTestReportId());
 
-		driver = new AppiumDriver(new URL(TESTOBJECT), capabilities);
+		driver = new AppiumDriver(TestObjectCapabilities.TESTOBJECT_APPIUM_ENDPOINT, capabilities);
+		watcher.setAppiumDriver(driver);
+
+		System.out.println("Test live view: " + driver.getCapabilities().getCapability("testobject_test_live_view_url"));
+		System.out.println("Test report: " + driver.getCapabilities().getCapability("testobject_test_report_url"));
 	}
 
 	@After
 	public void tearDown() {
-		driver.quit();
+		// The watcher will take care of quitting the driver.
+		if (watcher == null && driver != null) {
+			driver.quit();
+		}
 	}
 
 	@Test
@@ -72,11 +68,11 @@ public class CalculatorTest {
 		calculator.tapPlus();
 		calculator.tap5();
 		calculator.tapEquals();
-		
+
 		Assert.assertEquals("7", calculator.getResult());
 
-        byte[] image = driver.getScreenshotAs(OutputType.BYTES);
-        //Files.write(Paths.get("/home/aluedeke/Desktop/" + device + ".png"), image);
+		byte[] image = driver.getScreenshotAs(OutputType.BYTES);
+		// Files.write(Paths.get("/home/aluedeke/Desktop/" + device + ".png"), image);
 	}
 
 	public static class CalculatorActivityPageObject {
