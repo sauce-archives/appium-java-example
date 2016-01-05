@@ -38,9 +38,6 @@ public class CalculatorTest {
 	public void setUp() throws MalformedURLException {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 
-		capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, "com.android.calculator2");
-		capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, "Calculator");
-
 		capabilities.setCapability(TestObjectCapabilities.TESTOBJECT_API_KEY, watcher.getApiKey());
 		capabilities.setCapability(TestObjectCapabilities.TESTOBJECT_TEST_REPORT_ID, watcher.getTestReportId());
 
